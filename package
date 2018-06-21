@@ -42,6 +42,13 @@ function inject_revision {
     done
 }
 
+function inject_current_year {
+    for file in $@; do
+        year=$(date "+%Y")
+        sed -i "s/{YEAR}/$year/g" $file
+    done
+}
+
 echo Downloading source tarball
 wget -q --show-progress "https://github.com/hnicke/sodalite/archive/v${version}.tar.gz"
 
@@ -62,11 +69,12 @@ pushd $fakeroot/DEBIAN > /dev/null
 inject_version {changelog,control}
 inject_date changelog
 inject_revision changelog
+inject_current_year copyright
 popd > /dev/null
 
 
 echo Building deb package
 dpkg-deb --build $fakeroot > /dev/null
-rm -rf $fakeroot
+#rm -rf $fakeroot
 
 popd > /dev/null

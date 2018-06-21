@@ -3,7 +3,7 @@ Upstream-Name: sodalite
 Source: https://www.github.com/hnicke/sodalite
 
 Files: debian/*
-Copyright: 2017-2018 Heiko Nickerl <dev@heiko-nickerl.com>
+Copyright: 2017-{YEAR} Heiko Nickerl <dev@heiko-nickerl.com>
 License: GPL-3
  This package is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
