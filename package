@@ -1,0 +1,72 @@
+#!/bin/bash  
+
+function usage {
+    echo "Usage: $(basename $0) [version] [revision]" >&2
+}
+
+pushd "$(dirname "$0")" > /dev/null
+
+echo -n "Adjust package changelog? [Y/n]           "
+read answer
+if ! [[ $"anwser" =~ [nN] ]]; then
+    vim DEBIAN/changelog
+    exit
+fi
+echo
+
+[ "$1" ] || { echo Which version? >&2; usage; exit 1; }
+version=$1
+
+[ "$2" ] || { echo Which package revision? >&2; usage; exit 1; }
+revision=$2
+
+function inject_version {
+    echo Injecting version
+    for file in $@; do
+        sed -i "s/{VERSION}/$version/g" $file
+    done
+}
+
+function inject_date {
+    echo Injecting current datetime
+    datetime=$(date "+%a, %d %b %Y %H:%M:%S")
+    for file in $@; do
+        sed -i "s/{DATETIME}/$datetime/g" $file
+    done
+}
+
+function inject_revision {
+    echo Injecting revision
+    for file in $@; do
+        sed -i "s/{REVISION}/$revision/g" $file
+    done
+}
+
+echo Downloading source tarball
+wget -q --show-progress "https://github.com/hnicke/sodalite/archive/v${version}.tar.gz"
+
+echo Extracting tarball
+mkdir source
+tar -xf v${version}.tar.gz --directory source
+rm v${version}.tar.gz
+
+fakeroot=$PWD/sodalite_$version
+mkdir $fakeroot
+FAKE_ROOT=$fakeroot source/sodalite-$version/install 
+rm -rf source
+
+echo Adding DEBIAN directory
+cp -r DEBIAN $fakeroot/
+
+pushd $fakeroot/DEBIAN > /dev/null
+inject_version {changelog,control}
+inject_date changelog
+inject_revision changelog
+popd > /dev/null
+
+
+echo Building deb package
+dpkg-deb --build $fakeroot > /dev/null
+rm -rf $fakeroot
+
+popd > /dev/null

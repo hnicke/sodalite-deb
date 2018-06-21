@@ -1,0 +1,5 @@
+sodalite ({VERSION}-{REVISION}) unstable; urgency=medium
+
+  * Initial release
+
+ -- Heiko Nickerl <dev@heiko-nickerl.com>  {DATETIME} +0000

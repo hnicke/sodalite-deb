@@ -1,0 +1,2 @@
+?package(sodalite):needs="text" section="Applications/File Management"\
+  title="Sodalite" command="/usr/bin/sodalite"
