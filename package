@@ -7,8 +7,8 @@ function usage {
 pushd "$(dirname "$0")" > /dev/null
 
 echo -n "Adjust package changelog? [Y/n]           "
-read answer
-if ! [[ $"anwser" =~ [nN] ]]; then
+read -n1 answer
+if [[ "$anwser" =~ ^[^n]$ ]]; then
     vim DEBIAN/changelog
     exit
 fi
@@ -50,7 +50,12 @@ function inject_current_year {
 }
 
 echo Downloading source tarball
-wget -q --show-progress "https://github.com/hnicke/sodalite/archive/v${version}.tar.gz"
+target="https://github.com/hnicke/sodalite/archive/v${version}.tar.gz" 
+wget -q --show-progress "$target" ||
+     { echo Target not found: $target >&2; exit; }
+
+
+
 
 echo Extracting tarball
 mkdir source
@@ -75,6 +80,6 @@ popd > /dev/null
 
 echo Building deb package
 dpkg-deb --build $fakeroot > /dev/null
-#rm -rf $fakeroot
+rm -rf $fakeroot
 
 popd > /dev/null
