@@ -29,7 +29,7 @@ function inject_version {
 
 function inject_date {
     echo Injecting current datetime
-    datetime=$(date "+%a, %d %b %Y %H:%M:%S")
+    datetime=$(LC_ALL=en_US.utf8 date "+%a, %d %b %Y %H:%M:%S")
     for file in $@; do
         sed -i "s/{DATETIME}/$datetime/g" $file
     done
