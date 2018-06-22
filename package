@@ -4,6 +4,12 @@ function usage {
     echo "Usage: $(basename $0) [version] [revision]" >&2
 }
 
+[ "$1" ] || { echo Which version? >&2; usage; exit 1; }
+version=$1
+
+[ "$2" ] || { echo Which package revision? >&2; usage; exit 1; }
+revision=$2
+
 pushd "$(dirname "$0")" > /dev/null
 
 echo -n "Adjust package changelog? [Y/n]           "
@@ -13,12 +19,6 @@ if [[ "$anwser" =~ ^[^n]$ ]]; then
     exit
 fi
 echo
-
-[ "$1" ] || { echo Which version? >&2; usage; exit 1; }
-version=$1
-
-[ "$2" ] || { echo Which package revision? >&2; usage; exit 1; }
-revision=$2
 
 function inject_version {
     echo Injecting version
@@ -73,9 +73,9 @@ inject_revision debian/changelog
 inject_current_year debian/copyright
 
 echo Building deb package
-dpkg-buildpackage
+dpkg-buildpackage -b
 
 popd > /dev/null
 
-rm -rf $sources
+#rm -rf $sources
 popd > /dev/null
