@@ -9,7 +9,7 @@ pushd "$(dirname "$0")" > /dev/null
 echo -n "Adjust package changelog? [Y/n]           "
 read -n1 answer
 if [[ "$anwser" =~ ^[^n]$ ]]; then
-    vim DEBIAN/changelog
+    vim debian/changelog
     exit
 fi
 echo
@@ -58,28 +58,24 @@ wget -q --show-progress "$target" ||
 
 
 echo Extracting tarball
-mkdir source
-tar -xf v${version}.tar.gz --directory source
-rm v${version}.tar.gz
+tar -xf v${version}.tar.gz
+mv v${version}.tar.gz sodalite_$version.orig.tar.gz
 
-fakeroot=$PWD/sodalite_$version
-mkdir $fakeroot
-FAKE_ROOT=$fakeroot source/sodalite-$version/install 
-rm -rf source
+sources=sodalite-$version
 
-echo Adding DEBIAN directory
-cp -r DEBIAN $fakeroot/
+echo Adding debian directory
+cp -r debian $sources
 
-pushd $fakeroot/DEBIAN > /dev/null
-inject_version {changelog,control}
-inject_date changelog
-inject_revision changelog
-inject_current_year copyright
-popd > /dev/null
-
+pushd $sources> /dev/null
+inject_version debian/{changelog,control}
+inject_date debian/changelog
+inject_revision debian/changelog
+inject_current_year debian/copyright
 
 echo Building deb package
-dpkg-deb --build $fakeroot > /dev/null
-rm -rf $fakeroot
+dpkg-buildpackage
 
+popd > /dev/null
+
+rm -rf $sources
 popd > /dev/null
