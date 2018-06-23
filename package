@@ -49,8 +49,8 @@ function inject_current_year {
     done
 }
 
-mkdir sodalite-$version
-pushd sodalite-$version > /dev/null
+mkdir sodalite-$version-$revision
+pushd sodalite-$version-$revision > /dev/null
 
 echo Downloading source tarball
 tarball=v${version}.tar.gz
