@@ -49,8 +49,15 @@ function inject_current_year {
     done
 }
 
-mkdir sodalite-$version-$revision
-pushd sodalite-$version-$revision > /dev/null
+builddir=sodalite-$version-$revision
+if [ -d "$builddir" ]; then
+	echo -n 'A build '$builddir' already exists. Overwrite? [Y/n]     '
+	read -n1 answer
+	echo
+	! [[ "$answer" =~ ^n$ ]] &&  rm -rf "$builddir" || { echo Aborting; exit 1; }
+fi
+mkdir $builddir
+pushd $builddir > /dev/null
 
 echo Downloading source tarball
 tarball=v${version}.tar.gz
