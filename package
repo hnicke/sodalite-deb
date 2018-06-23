@@ -49,22 +49,24 @@ function inject_current_year {
     done
 }
 
+mkdir sodalite-$version
+pushd sodalite-$version > /dev/null
+
 echo Downloading source tarball
-target="https://github.com/hnicke/sodalite/archive/v${version}.tar.gz" 
+tarball=v${version}.tar.gz
+target="https://github.com/hnicke/sodalite/archive/$tarball"
 wget -q --show-progress "$target" ||
      { echo Target not found: $target >&2; exit; }
 
 
-
-
 echo Extracting tarball
-tar -xf v${version}.tar.gz
-mv v${version}.tar.gz sodalite_$version.orig.tar.gz
+tar -xf $tarball
+mv $tarball sodalite_$version.orig.tar.gz
 
 sources=sodalite-$version
 
 echo Adding debian directory
-cp -r debian $sources
+cp -r ../debian $sources
 
 pushd $sources> /dev/null
 inject_version debian/{changelog,control}
@@ -77,5 +79,6 @@ dpkg-buildpackage -b
 
 popd > /dev/null
 
-#rm -rf $sources
+rm -rf $sources
+popd > /dev/null
 popd > /dev/null
