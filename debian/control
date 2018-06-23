@@ -1,6 +1,6 @@
 Source: sodalite
 Section: utils
-Priority: extra
+Priority: optional
 Maintainer: Heiko Nickerl <dev@heiko-nickerl.com>
 Build-Depends: debhelper (>=9)
 Standards-Version: 4.1.2
