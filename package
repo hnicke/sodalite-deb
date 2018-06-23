@@ -54,9 +54,10 @@ pushd sodalite-$version > /dev/null
 
 echo Downloading source tarball
 tarball=v${version}.tar.gz
-target="https://github.com/hnicke/sodalite/archive/$tarball"
-wget -q --show-progress "$target" ||
-     { echo Target not found: $target >&2; exit; }
+url="https://github.com/hnicke/sodalite/archive/$tarball"
+#url="https://github.com/hnicke/sodalite/archive/master.tar.gz"
+wget -q --show-progress "$url" -O $tarball ||
+     { echo Target not found: $url >&2; exit; }
 
 
 echo Extracting tarball
@@ -64,6 +65,7 @@ tar -xf $tarball
 mv $tarball sodalite_$version.orig.tar.gz
 
 sources=sodalite-$version
+#sources=sodalite-master
 
 echo Adding debian directory
 cp -r ../debian $sources
