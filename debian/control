@@ -10,7 +10,7 @@ Vcs-Git: https://github.com/hnicke/sodalite.git
 
 Package: sodalite
 Architecture: all
-Depends: python3.6, python3-urwid, python3-pygments, python3-binaryornot, python3-yaml, python3-pyperclip, python3-watchdog
+Depends: python3 (>=3.6), python3-urwid, python3-pygments, python3-binaryornot, python3-yaml, python3-pyperclip, python3-watchdog
 Description: Keyboard-driven terminal file navigator and launcher
  Sodalite is a keyboard-driven terminal file navigator and launcher. 
  It's designed to be the missing glue for those who use the shell 
