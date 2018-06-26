@@ -3,16 +3,5 @@
 %:
 	dh $@
 
-#override_dh_auto_clean:
-#override_dh_auto_test:
-#override_dh_auto_build:
 override_dh_auto_install:
 	make DESTDIR=debian/sodalite sysconfdir=/etc localstatedir=/var prefix=/usr install
-
-override_dh_fix_perms:
-	# omg no. you need to use system logger service instead!!
-
-#override_dh_gencontrol:
-	#dh_gencontrol -- -v$(PACKAGEVERSION)
-	#3
-

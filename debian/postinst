@@ -1,5 +1,8 @@
 #!/bin/bash  
 set -e
+
+#DEBHELPER#
+
 bold=$(tput bold)
 normal=$(tput sgr0)
 echo "

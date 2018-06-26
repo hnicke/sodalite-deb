@@ -2,7 +2,7 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: sodalite
 Source: https://www.github.com/hnicke/sodalite
 
-Files: debian/*
+Files: *
 Copyright: 2017-{YEAR} Heiko Nickerl <dev@heiko-nickerl.com>
 License: GPL-3
  This package is free software; you can redistribute it and/or modify
