@@ -21,3 +21,7 @@ Description: Keyboard-driven terminal file navigator and launcher
  .
  Next to fast navigation, sodalite brings file preview
  with syntax highlighting and a pluggable hook system.
+ .
+ Sodalite is designed as an extension to your shell.
+ After installation, make sure you've enabled its shell integration.
+ 
