@@ -4,4 +4,4 @@
 	dh $@
 
 override_dh_auto_install:
-	make DESTDIR=debian/sodalite sysconfdir=/etc localstatedir=/var prefix=/usr install
+	make DESTDIR=debian/sodalite sysconfdir=/etc prefix=/usr install
