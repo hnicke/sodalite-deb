@@ -1,5 +1,6 @@
 sodalite ({VERSION}-{REVISION}) unstable; urgency=medium
 
+  * Remove non-conforming postinstall script
   * Initial release (closes: #902360)
 
  -- Heiko Nickerl <dev@heiko-nickerl.com>  {DATETIME} +0000
